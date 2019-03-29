@@ -15,7 +15,6 @@ function buildAudioGraph() {
 }
 
 function drawVolumeMeter() {
-
     ctx.save();
 
     // set the fill style to a nice gradient

@@ -2,46 +2,84 @@ defineGameListeners = function(){
     window.addEventListener('resize', resizeCanvas, false);
      // Mouse event listeners
 
-
     canvas.addEventListener('mousemove', function (event) {
       var mousePos = getMousePos(event);
-      sizeLINKED = 200 * (10/Math.sqrt(distance(mousePos,{x:canvas.width/8,y:canvas.height*5/8})));
-      if (sizeLINKED > 200) sizeLINKED = 200;
-      else if (sizeLINKED < 100) sizeLINKED = 100;
+      sizeLINKED = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy8,y:heightDivBy4 * 3})));
+      if (sizeLINKED > iconMaxSize) sizeLINKED = iconMaxSize;
+      else if (sizeLINKED < iconMinSize) sizeLINKED = iconMinSize;
 
-      sizeGIT = 200 * (10/Math.sqrt(distance(mousePos,{x:canvas.width/4,y:canvas.height*5/8})));
-      if (sizeGIT > 200) sizeGIT = 200;
-      else if (sizeGIT < 100) sizeGIT = 100;
+      sizeGIT = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy4,y:heightDivBy4 * 3})));
+      if (sizeGIT > iconMaxSize) sizeGIT = iconMaxSize;
+      else if (sizeGIT < iconMinSize) sizeGIT = iconMinSize;
 
-      sizeWWW = 200 * (10/Math.sqrt(distance(mousePos,{x:canvas.width*3/8,y:canvas.height*5/8})));
-      if (sizeWWW > 200) sizeWWW = 200;
-      else if (sizeWWW < 100) sizeWWW = 100;
+      sizeWWW = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy8 * 3,y:heightDivBy4 * 3})));
+      if (sizeWWW > iconMaxSize) sizeWWW = iconMaxSize;
+      else if (sizeWWW < iconMinSize) sizeWWW = iconMinSize;
+
+      sizeGITLAB = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy2,y:heightDivBy4 * 3})));
+      if (sizeGITLAB > iconMaxSize) sizeGITLAB = iconMaxSize;
+      else if (sizeGITLAB < iconMinSize) sizeGITLAB = iconMinSize;
+
+      sizeTWITTER = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy8*5,y:heightDivBy4 * 3})));
+      if (sizeTWITTER > iconMaxSize) sizeTWITTER = iconMaxSize;
+      else if (sizeTWITTER < iconMinSize) sizeTWITTER = iconMinSize;
+
+      sizeINSTAGRAM = iconMaxSize * (10 / Math.sqrt(distance(mousePos,{x:widthDivBy4 * 3,y:heightDivBy4 * 3})));
+      if (sizeINSTAGRAM > iconMaxSize) sizeINSTAGRAM = iconMaxSize;
+      else if (sizeINSTAGRAM < iconMinSize) sizeINSTAGRAM = iconMinSize;
+
+
     }, false);
 
     canvas.addEventListener('mousedown', function (event) {
-      if (sizeLINKED === 200){
-          window.location.href = "https://www.linkedin.com/in/julien-boivert-39517413a/";
-      } else if (sizeGIT === 200){
-          window.location.href = "https://github.com/BoivertJulien";
-      } else if (sizeWWW === 200){
-          window.location.href = "http://www.boivert.ovh";
+      if (sizeLINKED === iconMaxSize){
+          window.location.href = "https://www.linkedin.com/";
+      } else if (sizeGIT === iconMaxSize){
+          window.location.href = "https://www.github.com/";
+      } else if (sizeWWW === iconMaxSize){
+          window.location.href = "http://www.domain.ovh";
+      } else if (sizeGITLAB === iconMaxSize){
+          window.location.href = "https://www.gitlab.com";
+      } else if (sizeTWITTER === iconMaxSize){
+          window.location.href = "https://www.twitter.com";
+      } else if (sizeINSTAGRAM === iconMaxSize){
+          window.location.href = "http://www.instagram.com";
       }
     }, false);
 }
 
 function getMousePos(evt) {
-   // necessary to take into account CSS boudaries
-   var rect = canvas.getBoundingClientRect();
-   return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-   };
- }
+  // necessary to take into account CSS boudaries
+  var rect = canvas.getBoundingClientRect();
+
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    etoiles=[];
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // variable pour eviter calculs repetitifs
+  widthDivBy2 = canvas.width / 2;
+  widthDivBy4 = canvas.width / 4;
+  widthDivBy8 = canvas.width / 8;
+  heightDivBy2 = canvas.height / 2;
+  heightDivBy4 = canvas.height / 4;
+  heightDivBy8 = canvas.height / 8;
+
+  // Suppression des etoiles qui n'auront desormais plus la bonne direction
+  etoiles=[];
+
+  // (Re)Definition de la couleur d'arrière plan (depend hauteur de l'ecran)
+  gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, 'rgba(0,0,0,0.4)');
+  gradient.addColorStop(0.40, 'rgba(0,0,255,0.4)');
+  gradient.addColorStop(0.49, 'rgba(173,216,230,0.4)');
+  gradient.addColorStop(0.51, 'rgba(255,192,203,0.4)');
+  gradient.addColorStop(0.8, 'rgba(255,0,255,0.4)');
 }
 
 function distance(xy,xybis){

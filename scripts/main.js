@@ -1,52 +1,58 @@
 window.onload = init;
 
 let audioCtx = window.AudioContext || window.webkitAudioContext;
-let canvas, ctx, audioContext, player;
+let canvas, ctx, gradient, audioContext, player;
+let dataArray, analyser, bufferLength;
 let etoiles = [];
-let analyser;
-let dataArray, bufferLength;
-let gradient;
-let ME, GIT, WWW, LINKED;
+
+let ME, GIT, WWW, LINKED, GITLAB,TWITTER, INSTAGRAM;
 let sizeGIT=150, sizeWWW=150, sizeLINKED=150;
+let sizeGITLAB=150, sizeTWITTER=150, sizeINSTAGRAM=150;
+
+let iconMaxSize = 200;
+let iconMinSize = 100;
 
 let loaded = 0;
-// main.js
+let IMG_TO_LOAD = 7;
+
+let widthDivBy2, widthDivBy4, widthDivBy8;
+let heightDivBy2, heightDivBy4, heightDivBy8;
 
 function init() {
     canvas = document.querySelector("#myCanvas");
-    player = new Audio('songs/walkit.mp3');
+    player = new Audio('ressources/walkit.mp3');
     ME = new Image();
-    ME.addEventListener('load', function(){
-        loaded +=1;
-    });
-    ME.src = "songs/profil.png";
-
     GIT = new Image();
-    GIT.addEventListener('load', function(){
-        loaded +=1;
-    });
-    GIT.src = "songs/github.png";
-
     WWW = new Image();
-    WWW.addEventListener('load', function(){
-        loaded +=1;
-    });
-    WWW.src = "songs/www.png";
-
     LINKED = new Image();
-    LINKED.addEventListener('load', function(){
-        loaded +=1;
-    });
-    LINKED.src = "songs/linkedin.png";
+    GITLAB = new Image();
+    TWITTER = new Image();
+    INSTAGRAM = new Image();
+
+    ME.addEventListener('load', function(){ loaded +=1; });
+    GIT.addEventListener('load', function(){ loaded +=1; });
+    WWW.addEventListener('load', function(){ loaded +=1; });
+    LINKED.addEventListener('load', function(){ loaded +=1; });
+    GITLAB.addEventListener('load', function(){ loaded +=1; });
+    TWITTER.addEventListener('load', function(){ loaded +=1; });
+    INSTAGRAM.addEventListener('load', function(){ loaded +=1; });
+
+    ME.src = "ressources/profil.png";
+    GIT.src = "ressources/github.png";
+    WWW.src = "ressources/www.png";
+    LINKED.src = "ressources/linkedin.png";
+    GITLAB.src = "ressources/gitlab.png";
+    TWITTER.src = "ressources/twitter.png";
+    INSTAGRAM.src = "ressources/instagram.png";
 
     ctx = canvas.getContext("2d");
     audioContext = new audioCtx();
+
     buildAudioGraph();
     defineGameListeners();
-
     resizeCanvas();
-
     player.play();
+
     requestAnimationFrame(animation);
 }
 
@@ -59,21 +65,8 @@ function animation(time) {
     CV();
 
     var rand = Math.random();
-    if (rand > 0.75){
-        rect1 = new Etoile();
-        etoiles.push(rect1);
-    }
+    if (rand > 0.70){ etoiles.push(new Etoile()); }
     
     requestAnimationFrame(animation);
-
 }
 
-function dessineEtDeplaceLesEtoiles() {
-    etoiles.forEach((el, index, object) => {
-        el.draw(ctx);
-        el.move();
-        if ((Math.abs(el.x - (canvas.width*3 / 4)) < 20 && Math.abs(el.y - (canvas.height / 4)) < 20) || (el.x > canvas.width || el.x < 0)) {
-            object.splice(index, 1);
-        }
-    });
-}

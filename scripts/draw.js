@@ -1,17 +1,8 @@
 function clearCanvas() {
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // create a vertical gradient of the height of the canvas
-    gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, 'rgba(0,0,0,0.4)');
-    gradient.addColorStop(0.40, 'rgba(0,0,255,0.4)');
-    gradient.addColorStop(0.49, 'rgba(173,216,230,0.4)');
-    gradient.addColorStop(0.51, 'rgba(255,192,203,0.4)');
-    gradient.addColorStop(0.8, 'rgba(255,0,255,0.4)');
-
     ctx.save();
     ctx.fillStyle = gradient;
-
     ctx.beginPath();
+
     ctx.moveTo(0,0);
     ctx.lineTo(0,canvas.height);
     ctx.lineTo(canvas.width,canvas.height);
@@ -23,17 +14,43 @@ function clearCanvas() {
 
 function CV(){
     ctx.save();
-    ctx.fillStyle = 'rgba(250,250,250,0.1)';
-    ctx.fillRect (50, canvas.height/4, canvas.width/2 -100, canvas.height*3/4 -100);
 
+    // Grand panneau (Liens réseaux sociaux)
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    ctx.fillRect (0, heightDivBy8*5, canvas.width, heightDivBy4);
+
+    // Petit panneau (Photo profil)
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.fillRect (canvas.width/4-120,canvas.height/4-120,240,240);
+    ctx.fillRect (widthDivBy4-120,heightDivBy4-120,240,240);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillRect (widthDivBy4+120,heightDivBy4-100,270,80);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillRect (widthDivBy4+120,heightDivBy4+20,540,80);
 
-    if (loaded === 4){
-        ctx.drawImage(ME,canvas.width/4-100,canvas.height/4-100,200,200);
-        ctx.drawImage(LINKED,canvas.width/8-sizeLINKED/2,canvas.height*5/8-sizeLINKED/2,sizeLINKED,sizeLINKED);
-        ctx.drawImage(GIT,canvas.width/4-sizeGIT/2,canvas.height*5/8-sizeGIT/2,sizeGIT,sizeGIT);
-        ctx.drawImage(WWW,canvas.width/8*3-sizeWWW/2,canvas.height*5/8-sizeWWW/2,sizeWWW,sizeWWW);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.font = "40px Arial";
+    ctx.fillText("NOM Prénom", widthDivBy4+130, heightDivBy4-40); 
+    ctx.font = "40px Arial";
+    ctx.fillText("Description", widthDivBy4+130, heightDivBy4+80); 
+
+    if (loaded === IMG_TO_LOAD){
+        ctx.drawImage(ME, widthDivBy4-100, heightDivBy4-100, 200, 200);
+        ctx.drawImage(LINKED, widthDivBy8-sizeLINKED/2, heightDivBy4*3-sizeLINKED/2, sizeLINKED, sizeLINKED);
+        ctx.drawImage(GIT, widthDivBy4-sizeGIT/2, heightDivBy4*3-sizeGIT/2, sizeGIT, sizeGIT);
+        ctx.drawImage(WWW, widthDivBy8*3-sizeWWW/2, heightDivBy4*3-sizeWWW/2, sizeWWW, sizeWWW);
+        ctx.drawImage(GITLAB, widthDivBy2-sizeGITLAB/2, heightDivBy4*3-sizeGITLAB/2, sizeGITLAB, sizeGITLAB);
+        ctx.drawImage(TWITTER, widthDivBy8*5-sizeTWITTER/2, heightDivBy4*3-sizeTWITTER/2, sizeTWITTER, sizeTWITTER);
+        ctx.drawImage(INSTAGRAM, widthDivBy4*3-sizeINSTAGRAM/2, heightDivBy4*3-sizeINSTAGRAM/2, sizeINSTAGRAM, sizeINSTAGRAM);
     }
     ctx.restore();
+}
+
+function dessineEtDeplaceLesEtoiles() {
+    etoiles.forEach((star, index, object) => {
+        star.draw(ctx);
+        star.move();
+        if ((Math.abs(star.x - (widthDivBy4 * 3)) < 20 && Math.abs(star.y - heightDivBy4) < 20) || (star.x > canvas.width || star.x < 0)) {
+            object.splice(index, 1);
+        }
+    });
 }

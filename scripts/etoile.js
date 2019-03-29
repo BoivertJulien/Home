@@ -1,23 +1,22 @@
 class Etoile {
     constructor() {
+        // Position initiale de l'etoile en arc de cercle
         var rand = Math.random() * (-Math.PI);
+        this.x = (widthDivBy2 * Math.cos(rand)) + widthDivBy2;
+        this.y = (widthDivBy2 * Math.sin(rand)) + heightDivBy2;
 
-        this.x = ((canvas.width / 2) * Math.cos(rand)) + (canvas.width / 2);
-        this.y = ((canvas.width / 2) * Math.sin(rand)) + (canvas.height / 2);
-
-        this.vitesseX = (canvas.width*3 / 4 - this.x);
-        this.vitesseY = (canvas.height / 4 - this.y);
-        var len = Math.sqrt(this.vitesseX * this.vitesseX + this.vitesseY * this.vitesseY);
-        this.vitesseX *= 6 / len;
-        this.vitesseY *= 6 / len;
+        // Definition du vecteur de deplacement
+        var targetX = (widthDivBy4 * 3 - this.x);
+        var targetY = (heightDivBy4 - this.y);
+        var distance = Math.sqrt(targetX * targetX + targetY * targetY);
+        this.vitesseX = targetX * 6 / distance;
+        this.vitesseY = targetY * 6 / distance;
     }
 
     draw(ctx) {
         ctx.save();
-
         ctx.fillStyle = 'white';
         ctx.fillRect(this.x, this.y, 3, 3);
-
         ctx.restore();
     }
 
