@@ -29,9 +29,9 @@ function CV(){
 
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
     ctx.font = "40px Arial";
-    ctx.fillText("NOM Prénom", widthDivBy4+130, heightDivBy4-40); 
+    ctx.fillText(nom + " " + prenom, widthDivBy4+130, heightDivBy4-40); 
     ctx.font = "40px Arial";
-    ctx.fillText("Description", widthDivBy4+130, heightDivBy4+80); 
+    ctx.fillText(description, widthDivBy4+130, heightDivBy4+80); 
 
     if (loaded === IMG_TO_LOAD){
         ctx.drawImage(ME, widthDivBy4-100, heightDivBy4-100, 200, 200);

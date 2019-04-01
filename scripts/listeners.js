@@ -33,17 +33,17 @@ defineGameListeners = function(){
 
     canvas.addEventListener('mousedown', function (event) {
       if (sizeLINKED === iconMaxSize){
-          window.location.href = "https://www.linkedin.com/";
+          window.location.href = urlLinkedIn;
       } else if (sizeGIT === iconMaxSize){
-          window.location.href = "https://www.github.com/";
+          window.location.href = urlGithub;
       } else if (sizeWWW === iconMaxSize){
-          window.location.href = "http://www.domain.ovh";
+          window.location.href = urlWWW;
       } else if (sizeGITLAB === iconMaxSize){
-          window.location.href = "https://www.gitlab.com";
+          window.location.href = urlGitlab;
       } else if (sizeTWITTER === iconMaxSize){
-          window.location.href = "https://www.twitter.com";
+          window.location.href = urlTwitter;
       } else if (sizeINSTAGRAM === iconMaxSize){
-          window.location.href = "http://www.instagram.com";
+          window.location.href = urlInstagram;
       }
     }, false);
 }
